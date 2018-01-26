@@ -69,6 +69,7 @@ var annotools = function (options) {
   this.rb_tumpos.addEventListener('click', this.radiobuttonChange.bind(this), false);
   this.rb_tumneg.addEventListener('click', this.radiobuttonChange.bind(this), false);
   */
+  this.labelgroupradios = document.getElementsByName("labelgrouptype");
   var radios = document.getElementsByName("marktype");
   for( i = 0; i < radios.length; i++ ) {
 	  radios[i].addEventListener('click', this.radiobuttonChange.bind(this), false);

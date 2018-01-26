@@ -481,9 +481,30 @@ annotools.prototype.generateSVG = function (annotations) {
 			case 'TumorPos': line_color = 'orange'; break;
 			case 'TumorNeg': line_color = 'lime'; break;
 			default: line_color = jQuery("#" + annotation.properties.annotations.mark_type).attr("color");
-					 if (jQuery("#" + annotation.properties.annotations.mark_type + '_visualized').is(":checked")) {
+					 checked_groupvalue = document.querySelector('input[name = "labelgrouptype"]:checked').value;
+					 console.log(checked_groupvalue);
+					 //console.log(annotation.properties.annotations.mark_type);
+					 if (checked_groupvalue.includes(annotation.properties.annotations.mark_type))
+					 {
 						 stroke_opacity = 1;
 					 }
+					 
+					 console.log(this.labelgroupradios.length);
+					 //for( i = 0; i < this.labelgroupradios.length; i++ ){
+						 //if (this.labelgroupradios[i].value.includes(annotation.properties.annotations.mark_type){
+							 //stroke_opacity = 1;
+						 //}
+						 //console.log('aa');
+					 //}
+
+					 /*
+					 for( i = 0; i < radios.length; i++ ){
+						//console.log(radios[i].value);
+					 }*/
+
+					 //if (jQuery("#" + annotation.properties.annotations.mark_type + '_visualized').is(":checked")) {
+						 //stroke_opacity = 1;
+					 //}
 				break;
 		}
 		//svgHtml += '" style="fill:transparent; stroke:'+line_color+ '; stroke-width:2.5"/>'

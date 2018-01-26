@@ -54,10 +54,11 @@ include 'shared/osdHeader.php';
             -->
 
 			<?php
-				$string = file_get_contents("customized/lymph/markup_types.json");
+				$string = file_get_contents("customized/lymph/markup_types_new.json");
 				$json_data = json_decode($string, true);
 				$a = 'NA';
 				$selected_idx = 1;
+				$accumulated_name = '-';
 				foreach ($json_data as $key1 => $value1) {
 					$load_caption = $json_data[$key1]["caption"];
 					$load_dbname = $json_data[$key1]["DBName"];
@@ -65,18 +66,25 @@ include 'shared/osdHeader.php';
 					$load_linewidth = $json_data[$key1]["linewidth"];
 					$load_lineaffect = $json_data[$key1]["lineaffect"];
 
-					if (strcmp($load_caption, 'NULL') == 0)
+					if (strcmp($load_dbname, 'NULL') == 0)
 					{
+						echo '&nbsp &nbsp <input type="radio" name="labelgrouptype" value="' . $accumulated_name . '" id="' . $accumulated_name . '" class="radio_markup" checked>';
+						$accumulated_name = '-';
+						echo '<label for="abc" class=radio_markup> ' . $load_caption . '</label><br>';
 						echo '<p><p>';
 					}
 					else
 					{
-						echo '<input type="checkbox" name="markvisualized" id="' . $load_dbname . '_visualized' . '" checked> &nbsp &nbsp';
+						//echo '<input type="checkbox" name="markvisualized" id="' . $load_dbname . '_visualized' . '" checked> &nbsp &nbsp';
+						$accumulated_name = $accumulated_name . $load_dbname . '-';
+						echo '<input type="radio" name="marktype" value="' . $load_dbname . '" id="' . $load_dbname . '" class="radio_markup" ' . 'color="' . $load_color . '" linewidth=' . $load_linewidth . ' lineaffect=' . $load_lineaffect . ' checked>';
+						/*
 						if ($selected_idx == 1) {
 							echo '<input type="radio" name="marktype" value="' . $load_dbname . '" id="' . $load_dbname . '" class="radio_markup" ' . 'color="' . $load_color . '" linewidth=' . $load_linewidth . ' lineaffect=' . $load_lineaffect . ' checked>';
 						} else {
 							echo '<input type="radio" name="marktype" value="' . $load_dbname . '" id="' . $load_dbname . '" class="radio_markup" ' . 'color="' . $load_color . '" linewidth=' . $load_linewidth . ' lineaffect=' . $load_lineaffect . '>';
 						}
+						 */
 						$selected_idx = $selected_idx + 1;
 						$temp = '<label for="abc" class=radio_markup> ' . $load_caption . '</label><br>';
 						//$temp = '<label class=radio_markup> ' . $load_caption . '</label><br>';
