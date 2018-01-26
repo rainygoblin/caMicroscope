@@ -298,10 +298,6 @@ annotools.prototype.getMultiAnnot = function (viewer) {
   var val2 = ''
   var val3 = ''
 
-  
-    
-  var algorithms = []
-
   /*
   if (jQuery('#tree').attr('algotree')) {
     var selalgos = jQuery('#tree').fancytree('getTree').getSelectedNodes()
@@ -318,7 +314,7 @@ annotools.prototype.getMultiAnnot = function (viewer) {
   console.log(SELECTED_ALGORITHM_LIST);
   SELECTED_ALGORITHM_LIST = SELECTED_ALGORITHM_LIST.sort();
   console.log("....");
-  algorithms = SELECTED_ALGORITHM_LIST;
+    var algorithms = SELECTED_ALGORITHM_LIST.slice();
     
     
   //console.log(algorithms);
