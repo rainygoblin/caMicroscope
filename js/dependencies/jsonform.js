@@ -1,7 +1,7 @@
 function confirm_form_sub(){
-  alert("please confirm fields")
+  alert("Please confirm fields and Save");
   document.getElementById("frmconfirm").style.display = "none";
-  document.getElementById("frmsub").style.display = "block";
+  document.getElementById("frmsub").style.display = "";
 }
 
 /* Copyright (c) 2012 Joshfire - MIT license */
@@ -1111,7 +1111,7 @@ jsonform.elementTypes = {
       '</fieldset>'
   },
   'submit':{
-    'template':'<input id="frmconfirm" onclick="confirm_form_sub()" class="btn btn-primary" type="button" value="Save"></input><input type="submit" id="frmsub" style="display:none" class="btn btn-primary <%= elt.htmlClass?elt.htmlClass:"" %>" value="<%= value || node.title %>"<%= (node.disabled? " disabled" : "")%>/>'
+    'template':'<input id="frmconfirm" onclick="confirm_form_sub()" class="btn btn-primary" type="button" value="Save"></input><input type="submit" id="frmsub" style="display:none" class="btn btn-primary" value="Confirm Save"/>'
   },
   'button':{
     'template':' <button <% if (id) { %> id="<%= id %>" <% } %> class="btn <%= elt.htmlClass?elt.htmlClass:"" %>"><%= node.title %></button> '
