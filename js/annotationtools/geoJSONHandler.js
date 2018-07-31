@@ -620,8 +620,6 @@ annotools.prototype.generateSVG = function (annotations) {
                     });
                 });
             })
-            }
-            //end of new code
         });
 
     })
