@@ -120,7 +120,7 @@ return array(
     //'getTileLocation' => "$imageUrl/query/getTileLocationByIID?api_key=",
     'getMPP' => "$imageUrl/query/getMPPByIID?api_key=",
     'getImageInfoByCaseID'=> "$imageUrl/query/getImageInfoByCaseID?api_key=",
-    'fastcgi_server' => "/fcgi-bin/iipsrv.fcgi",
+    'fastcgi_server' => "/VTR-Pancreatic/fcgi-bin/iipsrv.fcgi",
     'imageStatusUpdate'=> "$imageUrl/delete/imageStatusUpdate?",
     'getImageStatus'=> "$imageUrl/query/getImageStatusByCaseID?api_key=",
     'getImageAssignTo'=> "$imageUrl/query/getImageAssignToByCaseID?api_key=",

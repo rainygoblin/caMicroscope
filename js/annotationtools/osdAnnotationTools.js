@@ -151,6 +151,7 @@ annotools.prototype.destroyMarkups = function (viewer) {
 
 /**
  * Rendering by execution ids
+ * TODO: Cleanup. Same as getMultiAnnot.
  *
  * @param algorithms
  */
@@ -222,10 +223,6 @@ annotools.prototype.getMultiAnnot = function (viewer) {
         var myList = OVERLAY_LIST;
 
         self.fetchAnnots(area, algorithms, myList);
-    } else {
-        self.setupHandlers();
-        self.destroyMarkups();
-        // destroy canvas
     }
 
 };
@@ -291,16 +288,21 @@ annotools.prototype.getAnnot = function (viewer) {
     this.y1 = this.imagingHelper._viewportOrigin['y'];
     this.x2 = this.x1 + this.imagingHelper._viewportWidth;
     this.y2 = this.y1 + this.imagingHelper._viewportHeight;
-
+    this.x1=0;
+    this.x2=this.imagingHelper.imgWidth;
+    this.y1=0;
+    this.y2=this.imagingHelper.imgHeight;
     boundX1 = this.imagingHelper.physicalToLogicalX(200);
     boundY1 = this.imagingHelper.physicalToLogicalY(20);
     boundX2 = this.imagingHelper.physicalToLogicalX(20);
     boundY2 = this.imagingHelper.physicalToLogicalY(20);
     var boundX = boundX1 - this.x1;
     var boundY = boundX;
+    boundX=0;
+    boundY=0;
 
-    var max = new OpenSeadragon.Point(this.imagingHelper.physicalToDataX(9), this.imagingHelper.physicalToDataY(9));
-    var origin = new OpenSeadragon.Point(this.imagingHelper.physicalToDataX(0), this.imagingHelper.physicalToDataY(0));
+    var max = new OpenSeadragon.Point(this.imagingHelper.imgWidth, this.imagingHelper.imgHeight);
+    var origin = new OpenSeadragon.Point(0, 0);
     var area = (max.x - origin.x) * (max.y - origin.y);
 
     // var t1 = performance.now()
@@ -1372,7 +1374,7 @@ annotools.prototype.updateAnnot = function (annot) {
             this.showMessage('saved to the server')
         }.bind(this),
         onFailure: function (e) {
-            this.showMessage('Error Saving the Annotations,please check your saveAnnot function')
+            this.showMessage('Error Saving the Annotations,please check you saveAnnot funciton')
         }.bind(this)
     }).post({
         'iid': this.iid,
@@ -1388,55 +1390,48 @@ annotools.prototype.updateAnnot = function (annot) {
  */
 annotools.prototype.saveAnnot = function (annotation) {
     // console.log("Saving annotation");
-    // console.log("annotation", JSON.stringify(annotation));
+    // console.log("annotation", annotation)
 
+    region_type=annotation.properties.annotations.region;
     //execution_id=annotation.provenance.analysis.execution_id;
-    var user = annotool.user;
-    var d = new Date();
-    var current_time = d.toLocaleString();
-    annotation.created_by = user;
-    annotation.created_on = current_time;
-    annotation.updated_by = '';
-    annotation.updated_on = '';
+    var user=annotool.user;
+    if(region_type=="Tumor"){
+       var execution_id =user+"_Tumor_Region" ;
+       annotation.provenance.analysis.execution_id = execution_id;
+     }
+    if(region_type=="Non_Tumor"){
+       annotation.provenance.analysis.execution_id =user+"_Non_Tumor_Region";
+     }
 
-    region_type = annotation.properties.annotations.region;
-    if (typeof region_type !== 'undefined')
-    {
-        // Human Markup
-        if (region_type === "Tumor") {
-            annotation.provenance.analysis.execution_id = user + "_Tumor_Region";
+     var d = new Date();
+     var current_time=d.toLocaleString();
+     annotation.created_by=user;
+     annotation.created_on=current_time;
+     annotation.updated_by='';
+     annotation.updated_on='';
+    jQuery.ajax({
+        'type': 'POST',
+        url: 'api/Data/getAnnotSpatial_sc.php',
+        data: annotation,
+        success: function (res, err) {
+            // console.log("response: ")
+            console.log(res);
+            console.log(err);
+            console.log('successfully posted')
         }
+    })
+    jQuery.ajax({
+        'type': 'POST',
+        url: 'api/Data/getAnnotSpatial_sc.php',
+        data: annotation,
+        success: function (res, err) {
+            // console.log("response: ")
+            console.log(res);
+            console.log(err);
 
-        if (region_type === "Non_Tumor") {
-            annotation.provenance.analysis.execution_id = user + "_Non_Tumor_Region";
+            console.log('successfully posted')
         }
-
-        jQuery.ajax({
-            'type': 'POST',
-            url: 'api/Data/getAnnotSpatial_sc.php',
-            data: annotation,
-            success: function (res, err) {
-                console.log(res);
-                console.log(err);
-                console.log('successfully posted')
-            }
-        });
-
-    }
-    else
-    {
-        // ROI, segmentation & feature extraction
-        jQuery.ajax({
-            'type': 'POST',
-            url: 'api/Data/getAnnotSpatial.php',
-            data: annotation,
-            success: function (res, err) {
-                console.log(res);
-                console.log(err);
-                console.log('successfully posted')
-            }
-        });
-    }
+    })
 
 };
 
@@ -2091,7 +2086,7 @@ annotools.prototype.saveState = function () {
                 this.showMessage('saved to the server')
             }.bind(this),
             onFailure: function (e) {
-                this.showMessage('Error Saving the state,please check your saveState function')
+                this.showMessage('Error Saving the state,please check you saveState funciton')
             }.bind(this)
         }).post({
             'iid': this.iid,
@@ -2754,6 +2749,7 @@ annotools.prototype.promptForWorkOrder = function (newAnnot, mode, annotools, ct
         //   End of Text input code
         //
 
+        // TODO: remove hardcoded vars.
         var width = 48002;
         var height = 35558;
 
@@ -2803,6 +2799,7 @@ annotools.prototype.promptForWorkOrder = function (newAnnot, mode, annotools, ct
             //var execution_id = jQuery('#order-execution_id').val()
             var notes = jQuery('#order-notes').val();
 
+            // TODO: remove if statement
             if (iid === 'TCGA-06-0148-01Z-00-DX1') {
                 width = 26001;
                 height = 27968
@@ -3040,3 +3037,4 @@ annotools.prototype.removeMouseEvents = function () {
     window.removeEventListener('mouseup', this.annotationHandler.handleMouseUp, false)
     // window.removeEventListener('mouseup', this.getAnnot(), false)
 };
+

@@ -1,3 +1,9 @@
+function confirm_form_sub(){
+  alert("please confirm fields")
+  document.getElementById("frmconfirm").style.display = "none";
+  document.getElementById("frmsub").style.display = "block";
+}
+
 /* Copyright (c) 2012 Joshfire - MIT license */
 /**
  * @fileoverview Core of the JSON Form client-side library.
@@ -1105,7 +1111,7 @@ jsonform.elementTypes = {
       '</fieldset>'
   },
   'submit':{
-    'template':'<input type="submit" <% if (id) { %> id="<%= id %>" <% } %> class="btn btn-primary <%= elt.htmlClass?elt.htmlClass:"" %>" value="<%= value || node.title %>"<%= (node.disabled? " disabled" : "")%>/>'
+    'template':'<input id="frmconfirm" onclick="confirm_form_sub()" class="btn btn-primary" type="button" value="Save"></input><input type="submit" id="frmsub" style="display:none" class="btn btn-primary <%= elt.htmlClass?elt.htmlClass:"" %>" value="<%= value || node.title %>"<%= (node.disabled? " disabled" : "")%>/>'
   },
   'button':{
     'template':' <button <% if (id) { %> id="<%= id %>" <% } %> class="btn <%= elt.htmlClass?elt.htmlClass:"" %>"><%= node.title %></button> '
@@ -3589,3 +3595,4 @@ global.JSONForm.util.setObjKey = jsonform.util.setObjKey;
   ((typeof jQuery !== 'undefined') ? jQuery : { fn: {} }),
   ((typeof _ !== 'undefined') ? _ : null),
   JSON);
+

@@ -68,7 +68,10 @@ AnnotationStore.prototype.fetchAnnotations = function (x1, y1, x2, y2, footprint
         console.log(footprint);
     var midX = x2;
     var midY = y2;
-
+    x1=0;
+    x2=9999;
+    y1=0;
+    y2=9999;
     /*
     var algorithms_urlparam = JSON.stringify(algorithms)
     algorithms_urlparam = algorithms_urlparam.replace('[', '%5B')

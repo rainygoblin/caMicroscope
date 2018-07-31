@@ -70,7 +70,7 @@ $.getScript('shared/ToolBar.js', function () {
                 'class': 'toolButton inactive',
                 'src': 'images/Heatmap.svg'
             });
-            tool.append(this.lymphbutton); // Lymphocyte Button
+            //tool.append(this.lymphbutton); // Lymphocyte Button
 /*
             this.qualitybutton = jQuery('<img>', {
                 'data-toggle': 'tooltip',
@@ -97,7 +97,7 @@ $.getScript('shared/ToolBar.js', function () {
                 src: 'images/composite.png',
                 id: 'gotocompositebutton'
             });
-            tool.append(this.compositebutton);
+            //tool.append(this.compositebutton);
 
             /* space */
             tool.append(jQuery('<img>', {
@@ -119,7 +119,7 @@ $.getScript('shared/ToolBar.js', function () {
                 'src': 'images/analyze.png'
 
             });
-            tool.append(this.analyticsbutton);
+            //tool.append(this.analyticsbutton);
 
 
             /* Annotation tools (re-add, comment) */
@@ -163,7 +163,7 @@ $.getScript('shared/ToolBar.js', function () {
                 'src': 'images/share.svg'
             });
 
-            tool.append(this.sharebutton);
+            //tool.append(this.sharebutton);
             this.magnifierButton = jQuery('<img>', {
                 'data-toggle': 'tooltip',
                 'data-placement': 'bottom',
@@ -174,7 +174,7 @@ $.getScript('shared/ToolBar.js', function () {
             });
             // default invisible
             this.magnifierButton.css("display", "none");
-            tool.append(this.magnifierButton);
+            //tool.append(this.magnifierButton);
             // it's ready
             var event = new Event("magnifier-button-loaded");
             document.dispatchEvent(event);
@@ -188,7 +188,7 @@ $.getScript('shared/ToolBar.js', function () {
                 'src': 'images/sidesplit.svg',
                 'id': 'sidesplit_toolbar_button'
             });
-            tool.append(this.sidesplitButton);
+            //tool.append(this.sidesplitButton);
             this.sidesplitButton.on('click', function(){
               var event = new Event("sidesplit");
               document.dispatchEvent(event);
@@ -198,7 +198,7 @@ $.getScript('shared/ToolBar.js', function () {
              * Event handlers for toolbar buttons
              */
             this.homebutton.on('click', function () {
-                window.location.href = "/select.php";
+                window.location.href = "../select.php";
             }.bind(this));
 
             /*

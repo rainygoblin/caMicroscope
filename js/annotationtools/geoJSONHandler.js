@@ -393,10 +393,10 @@ annotools.prototype.generateSVG = function (annotations) {
             }
 
             if (countNativepoints === countRectNativepoints) {
-                svgHtml += '" style="stroke:' + color + '; stroke-width:1.0; fill-opacity:0.0"/>';
+                 svgHtml += '" style="stroke:' + color + '; fill:' + color +'stroke-width:1.0; fill-opacity:0.3"/>';
             }
             else {
-                svgHtml += '" style="fill:transparent; stroke:' + color + '; stroke-width:2.5"/>'
+                svgHtml += '" style="fill:' + color + '; stroke:' + color + '; stroke-width:2.5; fill-opacity:0.3"/>'
             }
         }
 
@@ -584,7 +584,7 @@ annotools.prototype.generateSVG = function (annotations) {
                 content += "<button class='btn-danger btn' id='deleteAnnot'><a href='#confirmDelete' rel='modal:open'>Delete</a></button>";
                 content += "<button class='btn-danger btn' id='confirmDeleteButton'>Delete</a></button>";
             else if (alt)
-                content += "<button class='btn-danger btn' id='featureScape'>FeatureScape</button>";
+                content += "";
 
             content += "<button class='btn' id='cancelPanel'>Cancel</button>";
             content += "</div>";
