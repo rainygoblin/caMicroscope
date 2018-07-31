@@ -582,6 +582,7 @@ annotools.prototype.generateSVG = function (annotations) {
 
             if (ctrl)
                 content += "<button class='btn-danger btn' id='deleteAnnot'><a href='#confirmDelete' rel='modal:open'>Delete</a></button>";
+                content += "<button class='btn-danger btn' id='confirmDeleteButton'>Delete</a></button>";
             else if (alt)
                 content += "<button class='btn-danger btn' id='featureScape'>FeatureScape</button>";
 
@@ -600,30 +601,25 @@ annotools.prototype.generateSVG = function (annotations) {
 
             if (ctrl) { // Ctrl key for deletion of human generated annotation
                 jQuery("#deleteAnnot").click(function (e) {
-                    //$("#confirmDelete").css(
+                    document.getElementById("deleteAnnot").style.display = "none";
+                    document.getElementById("confirmDeleteButton").style.display = "";
                     //console.log(data.provenance.analysis.source);
-                    if (data.provenance.analysis.source == "human") {
-                        jQuery("#confirmDeleteButton").click(function () {
-                            var secret = jQuery("#deleteSecret").val();
-                            var payload = {
-                                "id": id,
-                                "secret": secret
-                            };
+                    jQuery("#confirmDeleteButton").click(function () {
+                        var payload = {
+                            "id": id
+                        };
 
-                            jQuery.ajax({
-                                url: 'api/Data/getPropertiesClone.php?id=' + id,
-                                type: 'DELETE',
-                                data: (payload),
-                                success: function (data) {
-                                    console.log(data);
-                                    jQuery("#panel").hide("slide");
-                                    self.getMultiAnnot();
-                                }
-                            });
+                        jQuery.ajax({
+                            url: 'api/Data/getProperties.php?id=' + id,
+                            type: 'DELETE',
+                            data: (payload),
+                            success: function (data) {
+                                console.log(data);
+                                jQuery("#panel").hide("slide");
+                                self.getMultiAnnot();
+                            }
                         });
-                    } else {
-                        alert("Can't delete computer generated segments");
-                    }
+                    });
                 })
             }
             if (alt) {  //new code go here to handle Alt key for featureScape view
