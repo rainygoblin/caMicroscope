@@ -597,77 +597,29 @@ annotools.prototype.generateSVG = function (annotations) {
                 cancel();
             });
 
-            if (ctrl) { // Ctrl key for deletion of human generated annotation
-                jQuery("#deleteAnnot").click(function (e) {
-                    alert("please confirm deletion of annotation with id: " + id);
-                    document.getElementById("deleteAnnot").style.display = "none";
-                    document.getElementById("confirmDeleteButton").style.display = "";
-                    //console.log(data.provenance.analysis.source);
-                    jQuery("#confirmDeleteButton").click(function () {
-                        var payload = {
-                            "id": id
-                        };
 
-                        jQuery.ajax({
-                            url: 'api/Data/getProperties.php?id=' + id,
-                            type: 'DELETE',
-                            data: (payload),
-                            success: function (data) {
-                                console.log(data);
-                                jQuery("#panel").hide("slide");
-                                self.getMultiAnnot();
-                            }
-                        });
+            jQuery("#deleteAnnot").click(function (e) {
+                alert("please confirm deletion of annotation with id: " + id);
+                document.getElementById("deleteAnnot").style.display = "none";
+                document.getElementById("confirmDeleteButton").style.display = "";
+                //console.log(data.provenance.analysis.source);
+                jQuery("#confirmDeleteButton").click(function () {
+                    var payload = {
+                        "id": id
+                    };
+
+                    jQuery.ajax({
+                        url: 'api/Data/getProperties.php?id=' + id,
+                        type: 'DELETE',
+                        data: (payload),
+                        success: function (data) {
+                            console.log(data);
+                            jQuery("#panel").hide("slide");
+                            self.getMultiAnnot();
+                        }
                     });
-                })
-            }
-            if (alt) {  //new code go here to handle Alt key for featureScape view
-                if (data.provenance.analysis.source == "human" || 1) {
-                    jQuery("#featureScape").click(function () {
-
-                        var execution_id = algorithm_id;
-                        var this_case_id = case_id;
-                        var this_cancerType = cancerType;
-                        var x_min = coordinates[0][0];
-                        var y_min = coordinates[0][1];
-                        var x_max = coordinates[2][0];
-                        var y_max = coordinates[2][1];
-                        //var randval = Math.random();
-                        var randval = 0.0001;
-                        var featureScape_url = "";
-
-                        //var github_url="http://sbu-bmi.github.io/FeatureScapeApps/featurescape/?";
-                        //var osprey_url="http://osprey.bmi.stonybrook.edu:3000?";
-
-                        var webhost_url = "/featurescapeapps/featurescape/?";
-
-                        //var findAPI_host="http://129.49.249.191";
-                        //var findAPI_port="4500";
-                        // var findAPI_url=findAPI_host+":"+findAPI_port+"?";
-
-                        //var findAPI_url=findAPIConfig.findAPI+":"+findAPIConfig.port+"?";
-                        var findAPI_url = findAPIConfig.findAPI + "?";
-
-                        var mongodb_query = "limit=1000&find={";
-                        mongodb_query += "\"provenance.analysis.source\":\"computer\",";
-                        mongodb_query += "\"randval\":{\"$gte\":" + randval + "},";
-                        mongodb_query += "\"provenance.analysis.execution_id\":\"" + execution_id + "\",";
-                        mongodb_query += "\"provenance.image.case_id\":\"" + this_case_id + "\",";
-                        mongodb_query += "\"x\":{\"$gte\":" + x_min + ",\"$lte\":" + x_max + "},";
-                        mongodb_query += "\"y\":{\"$gte\":" + y_min + ",\"$lte\":" + y_max + "}";
-                        mongodb_query += "}&db=quip" + "&c=" + this_cancerType;
-
-                        //featureScape_url=github_url+osprey_url+mongodb_query;
-                        featureScape_url = webhost_url + findAPI_url + mongodb_query;
-
-                        console.log(featureScape_url);
-                        window.open(featureScape_url, '_blank');
-                        jQuery("#panel").hide("slide");
-                        self.getMultiAnnot();
-                    });
-                } else {
-                    alert("Can't view the featureScape of computer generated segments");
-                }
+                });
+            })
             }
             //end of new code
         });
