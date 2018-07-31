@@ -602,7 +602,6 @@ annotools.prototype.generateSVG = function (annotations) {
 
             if (ctrl) { // Ctrl key for deletion of human generated annotation
                 jQuery("#deleteAnnot").click(function (e) {
-                    alert("please confirm that you want to delete " + id); 
                     document.getElementById("deleteAnnot").style.display = "none";
                     document.getElementById("confirmDeleteButton").style.display = "";
                     //console.log(data.provenance.analysis.source);
