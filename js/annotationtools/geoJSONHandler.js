@@ -582,7 +582,7 @@ annotools.prototype.generateSVG = function (annotations) {
 
             if (ctrl){
                 content += "<button class='btn-danger btn' id='deleteAnnot'><a href='#confirmDelete' rel='modal:open'>Delete</a></button>";
-                content += "<button class='btn-danger btn' id='confirmDeleteButton' style="display:none">Confirm Delete</a></button>";
+                content += "<button class='btn-danger btn' id='confirmDeleteButton' style='display:none'>Confirm Delete</a></button>";
             } else if (alt) {
                 content += "";
             }
