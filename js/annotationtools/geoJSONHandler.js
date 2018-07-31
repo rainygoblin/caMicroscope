@@ -582,7 +582,7 @@ annotools.prototype.generateSVG = function (annotations) {
 
             if (ctrl){
                 content += "<button class='btn-danger btn' id='deleteAnnot'><a href='#confirmDelete' rel='modal:open'>Delete</a></button>";
-                content += "<button class='btn-danger btn' id='confirmDeleteButton'>Delete</a></button>";
+                content += "<button class='btn-danger btn' id='confirmDeleteButton' style="display:none">Confirm Delete</a></button>";
             } else if (alt) {
                 content += "";
             }
@@ -602,6 +602,7 @@ annotools.prototype.generateSVG = function (annotations) {
 
             if (ctrl) { // Ctrl key for deletion of human generated annotation
                 jQuery("#deleteAnnot").click(function (e) {
+                    alert("please confirm that you want to delete " + id); 
                     document.getElementById("deleteAnnot").style.display = "none";
                     document.getElementById("confirmDeleteButton").style.display = "";
                     //console.log(data.provenance.analysis.source);
