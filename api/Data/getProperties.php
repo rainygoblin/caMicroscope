@@ -57,48 +57,29 @@ switch ($_SERVER['REQUEST_METHOD'])
     //print_r($data);
     
     $id = $data['id'];
-    $secret = $data['secret'];
 
-
-
-
-
-    //Check ID is human
     $getUrl  = $getUrl . "api_key=" . $api_key;
     $url = $getUrl . "&id=" . $id;
-          //echo $url;
     $getRequest = new RestRequest($url,'GET');
     $getRequest->execute();
     $annotationList = json_decode($getRequest->responseBody);
     $annotation = $annotationList[0];
     $source = $annotation->provenance->analysis->source;
     $annot_secret = $annotation->properties->annotations->secret;
-    if($source == "human"){
-      if($secret == $annot_secret){
-        echo "Source: ".$source;
 
+    $delUrl = $deleteUrl . "?api_key=".$api_key . "&id=".$id;
+    //echo $delUrl;
+    $curl = curl_init($delUrl);
 
-        $delUrl = $deleteUrl . "?api_key=".$api_key . "&id=".$id;
-        //echo $delUrl;
-        $curl = curl_init($delUrl);
+    //Delete request
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+    curl_setopt($curl, CURLOPT_HEADER, false);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json',"OAuth-Token: $token"));
 
-        //Delete request
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
-        curl_setopt($curl, CURLOPT_HEADER, false);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json',"OAuth-Token: $token"));
-
-        // Make the REST call, returning the result
-        $response = curl_exec($curl);
-        print_r($response);
-
-      echo "Deleted!";
-      } else {
-        echo "Wrong secret";
-      }
-    } else {
-      echo "Failed: Cant delete computer generated annotations";
-    }
+    // Make the REST call, returning the result
+    $response = curl_exec($curl);
+    print_r($response);
 
 
     //Delete ID
